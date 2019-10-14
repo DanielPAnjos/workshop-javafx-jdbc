@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +17,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -24,6 +27,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Seller;
 import model.services.SellerService;
@@ -113,33 +118,33 @@ public class SellerListController implements Initializable, DataChangeListener {
 	// Função pra carregar a janela de formulário para preencher um novo
 	// departamento.
 	private void createDialogForm(Seller obj, String absoluteName, Stage parentStage) {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-//			Pane pane = loader.load();
-//
-//			SellerFormController controller = loader.getController();
-//			controller.setSeller(obj);
-//			controller.setDeparmentService(new SellerService());
-//			controller.subscribeDataChangeListener(this);
-//			controller.updateFormData();
-//
-//			Stage dialogStage = new Stage();
-//			// Titulo da janela
-//			dialogStage.setTitle("Enter Seller data");
-//			// Scena da janela
-//			dialogStage.setScene(new Scene(pane));
-//			// diz se a janela pode ou não ser redimensionada
-//			dialogStage.setResizable(false);
-//			// diz quem é o pai dessa janela
-//			dialogStage.initOwner(parentStage);
-//			// diz se a janela vai ser modal ou se vai ter outro comportamento.
-//			// Fica travada enquando não for fechada não pode mexer na janela anterior
-//			dialogStage.initModality(Modality.WINDOW_MODAL);
-//			dialogStage.showAndWait();
-//
-//		} catch (IOException e) {
-//			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
-//		}
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			Pane pane = loader.load();
+
+			SellerFormController controller = loader.getController();
+			controller.setSeller(obj);
+			controller.setSellerService(new SellerService());
+			controller.subscribeDataChangeListener(this);
+			controller.updateFormData();
+
+			Stage dialogStage = new Stage();
+			// Titulo da janela
+			dialogStage.setTitle("Enter Seller data");
+			// Scena da janela
+			dialogStage.setScene(new Scene(pane));
+			// diz se a janela pode ou não ser redimensionada
+			dialogStage.setResizable(false);
+			// diz quem é o pai dessa janela
+			dialogStage.initOwner(parentStage);
+			// diz se a janela vai ser modal ou se vai ter outro comportamento.
+			// Fica travada enquando não for fechada não pode mexer na janela anterior
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
+		}
 	}
 
 	@Override
